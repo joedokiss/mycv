@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  dev:
+    container_name: nest-dev
+    image: nestjs-api-dev:1.0.0
+    build:
+      context: .
+      target: development
+      dockerfile: ./Dockerfile
+    command: npm run start:debug
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+    ports:
+      - 3000:3000
+    networks:
+      - nestjs-network
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - mongodb
+      - postgres
+    restart: unless-stopped
+  postgres:
+    container_name: nest-postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - nestjs-network
+networks:
+  nestjs-network:
+volumes:
+  pgdata:
