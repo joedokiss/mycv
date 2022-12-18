@@ -46,7 +46,7 @@ export class UsersService {
     return this.repo.remove(user);
   }
 
-  createUsers() {
+  createAndSaveUsersCollection() {
     const usersCollection: Partial<User>[] = [];
 
     for (let i = 0; i < 1000; i++) {
@@ -64,5 +64,18 @@ export class UsersService {
     const users = this.repo.create(usersCollection);
 
     this.repo.save(users);
+  }
+
+  createUsers() {
+    let counter = 0;
+
+    const v = setInterval(() => {
+      this.createAndSaveUsersCollection();
+
+      counter++;
+      if (counter === 3) {
+        clearInterval(v);
+      }
+    }, 2000);
   }
 }
