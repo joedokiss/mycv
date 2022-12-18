@@ -17,7 +17,7 @@ import cookieSession from 'cookie-session';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
         return {
-          type: 'postgres',
+          type: 'mysql',
           host: config.get<string>('DB_HOST'),
           port: Number(config.get<number>('DB_PORT')),
           username: config.get<string>('DB_USERNAME'),
@@ -42,14 +42,4 @@ import cookieSession from 'cookie-session';
     },
   ],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(
-        cookieSession({
-          keys: ['iloveyou'],
-        }),
-      )
-      .forRoutes('*');
-  }
-}
+export class AppModule {}

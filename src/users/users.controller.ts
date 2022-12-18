@@ -32,7 +32,7 @@ export class UsersController {
     const { email, password } = body;
 
     const user = await this.authService.signup(email, password);
-    session.userId = user.id;
+    // session.userId = user.id;
     return user;
   }
 
@@ -41,7 +41,7 @@ export class UsersController {
     const { email, password } = body;
 
     const user = await this.authService.signin(email, password);
-    session.userId = user.id;
+    // session.userId = user.id;
     return user;
   }
 
