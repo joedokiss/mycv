@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import { faker } from '@faker-js/faker';
 
 @Injectable()
 export class UsersService {
@@ -43,5 +44,25 @@ export class UsersService {
     const user = await this.findOne(id);
 
     return this.repo.remove(user);
+  }
+
+  createUsers() {
+    const usersCollection: Partial<User>[] = [];
+
+    for (let i = 0; i < 1000; i++) {
+      const user: Partial<User> = {
+        username: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        company: faker.company.name(),
+        vehicle: faker.vehicle.vehicle(),
+      };
+
+      usersCollection.push(user);
+    }
+
+    const users = this.repo.create(usersCollection);
+
+    this.repo.save(users);
   }
 }

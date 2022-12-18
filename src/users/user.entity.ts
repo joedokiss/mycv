@@ -18,6 +18,15 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  username: string;
+
+  @Column()
+  company: string;
+
+  @Column()
+  vehicle: string;
+
   @AfterInsert()
   logInsert() {
     console.log('Inserted User with id', this.id);

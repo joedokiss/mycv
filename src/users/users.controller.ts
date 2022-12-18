@@ -82,4 +82,9 @@ export class UsersController {
   updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
     return this.usersService.update(parseInt(id), body);
   }
+
+  @Post('/bulk')
+  createUsers() {
+    return this.usersService.createUsers();
+  }
 }
